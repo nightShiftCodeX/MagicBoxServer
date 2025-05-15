@@ -17,8 +17,8 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/chat', async (req, res) => {
-    const { userInput } = req.body;
-    console.log(userInput);
+    const { userInput, passkey } = req.body;
+    if(passkey !== process.env.PASSKEY) return res.send({success: false, message: "ACCESS DENIED"});
     const result = await sendReqToGemini(userInput);
     return res.send({success: true, message: result.content});
 })
