@@ -30,15 +30,28 @@ app.get('/', (req, res) => {
 
 app.post('/api/user', async (req, res) => {
     const { name, device_id } = req.body;
-    const user = new User({name, device_id});
-    await user.save();
-    return res.send({success: true, message: "USER CREATED", user: user});
+    try {
+        const user = new User({name, device_id});
+        await user.save();
+        return res.send({success: true, message: "USER CREATED", user: user});
+    }
+    catch(error) {
+        console.log(error);
+        return res.send({success: false, message: error.message});
+    }
+
 })
 
 app.delete('/api/user', async (req, res) => {
     const { device_id } = req.body;
-    const user = await User.deleteOne({device_id});
-    return res.send({success: true, message: "USER DELETED", user: user});
+    try {
+        const user = await User.deleteOne({device_id});
+        return res.send({success: true, message: "USER DELETED", user: user});
+    }
+    catch(error) {
+        console.log(error);
+        return res.send({success: false, message: error.message});
+    }
 })
 
 app.post('/api/chat', async (req, res) => {
