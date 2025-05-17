@@ -3,9 +3,21 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 import { sendReqToGemini } from './connectGemini.js';
+import mongoose from 'mongoose';
+import User from './User.js';
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+
+// CONNECTING DATABASE
+mongoose.connect(process.env.MONGO_URL).then(() => {
+    console.log("DATABASE CONNECTED");
+}).catch((error) => {
+    console.log(error);
+})
+
 
 // EXPRESS MIDDLEWARES
 app.use(express.json());
@@ -16,10 +28,26 @@ app.get('/', (req, res) => {
     return res.send("API WORKING");
 })
 
+app.post('/api/user', async (req, res) => {
+    const { name, device_id } = req.body;
+    const user = new User({name, device_id});
+    await user.save();
+    return res.send({success: true, message: "USER CREATED", user: user});
+})
+
+app.delete('/api/user', async (req, res) => {
+    const { device_id } = req.body;
+    const user = await User.deleteOne({device_id});
+    return res.send({success: true, message: "USER DELETED", user: user});
+})
+
 app.post('/api/chat', async (req, res) => {
-    const { userInput, passkey } = req.body;
+    const { userInput, passkey, device_id } = req.body;
     try{
-        if(!passkey || passkey !== process.env.PASSKEY) return res.send({success: false, message: "ACCESS DENIED"});
+        console.log(`device_id`, device_id);
+        const device = await User.findOne({device_id});
+        if(!device) return res.send({success: false, message: "ACCESS DENIED"});
+        if(!passkey || passkey !== process.env.PASSKEY) return res.send({success: false, message: "INVALID PASSKEY"});
         const result = await sendReqToGemini(userInput);
         return res.send({success: true, message: result.content});
     }
