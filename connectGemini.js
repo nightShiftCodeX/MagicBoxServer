@@ -11,7 +11,7 @@ const model = new ChatGoogleGenerativeAI({
 
 const sendReqToGemini = async (prompt) => {
     const messages = [
-        new SystemMessage("Act as MCQ Sovling Expert with 100% accuracy and i will give you mcq questions and you have to give only the correct answer from the options without any explanaion"),
+        new SystemMessage("Act as MCQ Sovling Expert with 100% accuracy and i will give you mcq questions and you have to give only the correct answer from the options without any explanaion and if i give any coding question then give the correct coding solution in java."),
         new HumanMessage(prompt)
     ];
     
