@@ -55,10 +55,10 @@ app.delete('/api/user', async (req, res) => {
 })
 
 app.post('/api/chat', async (req, res) => {
-    const { userInput, passkey, device_id } = req.body;
+    const { userInput, passkey, deviceId } = req.body;
     try{
-        console.log(`device_id`, device_id);
-        const device = await User.findOne({device_id});
+        console.log(`deviceId`, deviceId);
+        const device = await User.findOne({deviceId});
         if(!device) return res.send({success: false, message: "ACCESS DENIED"});
         if(!passkey || passkey !== process.env.PASSKEY) return res.send({success: false, message: "INVALID PASSKEY"});
         const result = await sendReqToGemini(userInput);
