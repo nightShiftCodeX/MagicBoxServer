@@ -33,6 +33,7 @@ const sendReqToGemini = async (prompt, apiKey) => {
     let key = apiKey;
     if(!response) {
         key = process.env.GEMINI_API_KEY;
+        console.log(`new key is not valid`);
     }
     
     const model = new ChatGoogleGenerativeAI({
