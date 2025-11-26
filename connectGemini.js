@@ -5,36 +5,36 @@ import fetch from "node-fetch";
 import dotenv from 'dotenv'
 dotenv.config();
 
-async function isValidGeminiKey(apiKey) {
-  try {
-    const res = await fetch(
-      "https://generativelanguage.googleapis.com/v1/models",
-      {
-        headers: { "x-goog-api-key": apiKey }
-      }
-    );
+// async function isValidGeminiKey(apiKey) {
+//   try {
+//     const res = await fetch(
+//       "https://generativelanguage.googleapis.com/v1/models",
+//       {
+//         headers: { "x-goog-api-key": apiKey }
+//       }
+//     );
 
-    // If key is invalid → Google returns 401 or 403
-    if (res.status === 401 || res.status === 403) {
-      return false;
-    }
+//     // If key is invalid → Google returns 401 or 403
+//     if (res.status === 401 || res.status === 403) {
+//       return false;
+//     }
 
-    // If valid → should return 200 OK
-    return true;
-  } catch (err) {
-    console.error("API validation failed:", err);
-    return false;
-  }
-}
+//     // If valid → should return 200 OK
+//     return true;
+//   } catch (err) {
+//     console.error("API validation failed:", err);
+//     return false;
+//   }
+// }
 
 const sendReqToGemini = async (prompt, apiKey) => {
 
-    const response = await isValidGeminiKey(apiKey);
+    // const response = await isValidGeminiKey(apiKey);
     let key = apiKey;
-    if(!response) {
-        key = process.env.GEMINI_API_KEY;
-        console.log(`new key is not valid`);
-    }
+    // if(!response) {
+    //     key = process.env.GEMINI_API_KEY;
+    //     console.log(`new key is not valid`);
+    // }
     
     const model = new ChatGoogleGenerativeAI({
         model: "gemini-2.0-flash",
