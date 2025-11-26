@@ -62,7 +62,7 @@ app.post('/api/chat', async (req, res) => {
         console.log(`user : ${device.name}`);
         if(!device) return res.send({success: false, message: "ACCESS DENIED"});
         if(!passkey || passkey !== process.env.PASSKEY) return res.send({success: false, message: "INVALID PASSKEY"});
-        const result = await sendReqToGemini(userInput);
+        const result = await sendReqToGemini(userInput, apiKey);
         return res.send({success: true, message: result.content});
     }
     catch(error) {
