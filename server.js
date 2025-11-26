@@ -57,7 +57,7 @@ app.delete('/api/user', async (req, res) => {
 app.post('/api/chat', async (req, res) => {
     const { userInput, passkey, deviceId, apiKey } = req.body;
     try{
-        // console.log(`deviceId`, deviceId);
+        console.log(`apiKey : ${apiKey}`);
         const device = await User.findOne({deviceId});
         console.log(`user : ${device.name}`);
         if(!device) return res.send({success: false, message: "ACCESS DENIED"});
