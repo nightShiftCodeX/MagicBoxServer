@@ -30,7 +30,7 @@ dotenv.config();
 const sendReqToGemini = async (prompt, apiKey) => {
 
     // const response = await isValidGeminiKey(apiKey);
-    let key = apiKey;
+    // let key = apiKey;
     // if(!response) {
     //     key = process.env.GEMINI_API_KEY;
     //     console.log(`new key is not valid`);
@@ -38,7 +38,7 @@ const sendReqToGemini = async (prompt, apiKey) => {
     
     const model = new ChatGoogleGenerativeAI({
         model: "gemini-2.0-flash",
-        apiKey: key
+        apiKey: process.env.GEMINI_API_KEY;
     });
     
     const messages = [
