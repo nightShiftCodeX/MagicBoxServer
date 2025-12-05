@@ -38,7 +38,7 @@ const sendReqToGemini = async (prompt, apiKey) => {
     
     const model = new ChatGoogleGenerativeAI({
         model: "gemini-2.0-flash",
-        apiKey: process.env.GEMINI_API_KEY
+        apiKey: apiKey
     });
     
     const messages = [
