@@ -42,7 +42,7 @@ const sendReqToGemini = async (prompt, apiKey) => {
     });
     
     const messages = [
-        new SystemMessage("Act as MCQ Sovling Expert with 100% accuracy and i will give you mcq questions and you have to give only the correct answer from the options without any explanaion and if i give any coding question then give the correct coding solution in java."),
+        new SystemMessage("Act as MCQ Sovling Expert with 100% accuracy and i will give you mcq questions and you have to give only the correct answers, and if i give you any coding question then give me the coding solution in python, and if i give any paragraph writing then write the paragraph."),
         new HumanMessage(prompt)
     ];
     
